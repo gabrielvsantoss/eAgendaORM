@@ -3,7 +3,7 @@ using eAgenda.Dominio.ModuloCompromisso;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace eAgenda.Infraestrutura.Orm.ModuloContato
+namespace eAgenda.Infraestrutura.Orm.ModuloCompromisso
 {
     public class MapeadorCompromissoEmOrm : IEntityTypeConfiguration<Compromisso>
     {

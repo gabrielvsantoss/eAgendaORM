@@ -4,6 +4,7 @@ using eAgenda.Infraestrutura.Orm.ModuloContato;
 using Microsoft.EntityFrameworkCore;
 using eAgenda.Dominio.ModuloCategoria;
 using eAgenda.Dominio.ModuloDespesa;
+using eAgenda.Infraestrutura.Orm.ModuloDespesa;
 
 namespace eAgenda.Infraestrutura.Orm.Compartilhado
 {
@@ -22,6 +23,7 @@ namespace eAgenda.Infraestrutura.Orm.Compartilhado
         {
             modelBuilder.ApplyConfiguration(new MapeadorContatoEmOrm());
             var assembly = typeof(eAgendaDbContext).Assembly;
+            modelBuilder.ApplyConfiguration(new MapeadorDespesaEmOrm());
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
             base.OnModelCreating(modelBuilder);
         }

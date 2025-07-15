@@ -1,5 +1,7 @@
 ﻿using eAgenda.Dominio.ModuloCategoria;
 using eAgenda.Dominio.ModuloDespesa;
+using eAgenda.Infraestrutura.ModuloCompromisso;
+using eAgenda.Infraestrutura.Orm.Compartilhado;
 using eAgenda.WebApp.Extensions;
 using eAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -12,14 +14,13 @@ public class DespesaController : Controller
 {
     private readonly IRepositorioDespesa repositorioDespesa;
     private readonly IRepositorioCategoria repositorioCategoria;
+    private readonly eAgendaDbContext contexto;
 
-    public DespesaController(
-        IRepositorioDespesa repositorioDespesa, 
-        IRepositorioCategoria repositorioCategoria
-    )
+    public DespesaController(IRepositorioDespesa repositorioDespesa, IRepositorioCategoria repositorioCategoria, eAgendaDbContext contexto)
     {
         this.repositorioDespesa = repositorioDespesa;
         this.repositorioCategoria = repositorioCategoria;
+        this.contexto = contexto;
     }
 
     [HttpGet]
@@ -78,8 +79,22 @@ public class DespesaController : Controller
                 }
             }
         }
+        var transacao = contexto.Database.BeginTransaction();
 
-        repositorioDespesa.CadastrarRegistro(despesa);
+        try
+        {
+            repositorioDespesa.CadastrarRegistro(despesa);
+            contexto.SaveChanges();
+            transacao.Commit();
+
+        }
+
+        catch (Exception)
+        {
+            transacao.Rollback();
+            throw;
+        }
+
 
         return RedirectToAction(nameof(Index));
     }
@@ -125,12 +140,11 @@ public class DespesaController : Controller
             return View(editarVM);
         }
 
-        // Obtém dados editados
+        
         var despesaEditada = editarVM.ParaEntidade();
 
         var categoriasSelecionadas = editarVM.CategoriasSelecionadas;
 
-        // Adiciona as categorias selecionadas
         if (categoriasSelecionadas is not null)
         {
             foreach (var idSelecionado in categoriasSelecionadas)
@@ -146,8 +160,22 @@ public class DespesaController : Controller
             }
         }
 
-        // Atualiza os dados da despesa selecionada
-        repositorioDespesa.EditarRegistro(id, despesaEditada);
+        
+        var transacao = contexto.Database.BeginTransaction();
+
+        try
+        {
+            repositorioDespesa.EditarRegistro(id, despesaEditada);
+            contexto.SaveChanges();
+            transacao.Commit();
+
+        }
+
+        catch (Exception)
+        {
+            transacao.Rollback();
+            throw;
+        }
 
         return RedirectToAction(nameof(Index));
     }
@@ -180,7 +208,22 @@ public class DespesaController : Controller
         foreach (var cat in registroSelecionado.Categorias.ToList())
             registroSelecionado.RemoverCategoria(cat);
 
-        repositorioDespesa.ExcluirRegistro(id);
+
+        var transacao = contexto.Database.BeginTransaction();
+
+        try
+        {
+            repositorioDespesa.ExcluirRegistro(id);
+            contexto.SaveChanges();
+            transacao.Commit();
+
+        }
+
+        catch (Exception)
+        {
+            transacao.Rollback();
+            throw;
+        }
 
         return RedirectToAction(nameof(Index));
     }

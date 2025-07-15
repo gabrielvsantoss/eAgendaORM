@@ -3,7 +3,7 @@ using eAgenda.Dominio.ModuloCategoria;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace eAgenda.Infraestrutura.Orm.ModuloContato
+namespace eAgenda.Infraestrutura.Orm.ModuloCategoria
 {
     public class MapeadorCategoriaEmOrm : IEntityTypeConfiguration<Categoria>
     {

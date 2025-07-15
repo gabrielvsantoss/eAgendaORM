@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ModuloDespesa\" />
+    <Folder Include="ModuloTarefa\" />
   </ItemGroup>
 
 </Project>
