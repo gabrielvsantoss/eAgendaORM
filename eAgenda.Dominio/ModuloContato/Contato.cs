@@ -10,11 +10,9 @@ public class Contato : EntidadeBase<Contato>
     public string Email { get; set; }
     public string? Empresa { get; set; }
     public string? Cargo { get; set; }
-    public List<Compromisso> Compromissos { get; set; }
 
     public Contato()
     {
-        Compromissos = new List<Compromisso>();
     }
 
     public Contato(string nome, string telefone, string email, string? empresa, string? cargo) : this()
@@ -36,19 +34,5 @@ public class Contato : EntidadeBase<Contato>
         Empresa = registroEditado.Empresa;
     }
 
-    public void RegistrarCompromisso(Compromisso compromisso)
-    {
-        if (Compromissos.Any(c => c.Id == compromisso.Id))
-            return;
-
-        Compromissos.Add(compromisso);
-    }
-
-    public void RemoverCompromisso(Compromisso compromisso)
-    {
-        if (!Compromissos.Any(c => c.Id == compromisso.Id))
-            return;
-
-        Compromissos.Remove(compromisso);
-    }
+  
 }
