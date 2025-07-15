@@ -37,7 +37,6 @@ namespace eAgenda.Infraestrutura.Orm.ModuloContato
             builder.HasOne(x => x.Contato)
                 .WithMany(p => p.Compromissos)
                 .IsRequired(false);
-
         }
     }
 }

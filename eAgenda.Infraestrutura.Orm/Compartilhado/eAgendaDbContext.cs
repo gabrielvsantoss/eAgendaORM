@@ -2,6 +2,8 @@
 using eAgenda.Dominio.ModuloCompromisso;
 using eAgenda.Infraestrutura.Orm.ModuloContato;
 using Microsoft.EntityFrameworkCore;
+using eAgenda.Dominio.ModuloCategoria;
+using eAgenda.Dominio.ModuloDespesa;
 
 namespace eAgenda.Infraestrutura.Orm.Compartilhado
 {
@@ -9,8 +11,8 @@ namespace eAgenda.Infraestrutura.Orm.Compartilhado
     {
         public DbSet<Contato> Contatos { get; set; }
         public DbSet<Compromisso> Compromissos { get; set; }
-
-
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Despesa> Despesas { get; set; }
         public eAgendaDbContext(DbContextOptions options) : base(options)
         {
 
