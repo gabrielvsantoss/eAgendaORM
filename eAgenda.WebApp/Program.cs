@@ -4,6 +4,7 @@ using eAgenda.Dominio.ModuloContato;
 using eAgenda.Dominio.ModuloDespesa;
 using eAgenda.Dominio.ModuloTarefa;
 using eAgenda.Infraestrutura.Orm.Compartilhado;
+using eAgenda.Infraestrutura.Orm.ModuloCompromisso;
 using eAgenda.Infraestrutura.Orm.ModuloContato;
 using eAgenda.Infraestrutura.SqlServer.ModuloCategoria;
 using eAgenda.Infraestrutura.SqlServer.ModuloCompromisso;
@@ -38,7 +39,7 @@ public class Program
         });
 
         builder.Services.AddScoped<IRepositorioContato, RepositorioContatoEmOrm>();
-        builder.Services.AddScoped<IRepositorioCompromisso, RepositorioCompromissoEmSql>();
+        builder.Services.AddScoped<IRepositorioCompromisso, RepositorioCompromissoEmOrm>();
         builder.Services.AddScoped<IRepositorioCategoria, RepositorioCategoriaEmSql>();
         builder.Services.AddScoped<IRepositorioDespesa, RepositorioDespesaEmSql>();
         builder.Services.AddScoped<IRepositorioTarefa, RepositorioTarefaEmSql>();
