@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>6883d797-ac6a-4e2f-9021-89c6f98e4f16</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\bootstrap\.DS_Store" />
+    <None Include="wwwroot\lib\bootstrap\css\.DS_Store" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\eAgenda.Dominio\eAgenda.Dominio.csproj" />
+    <ProjectReference Include="..\eAgenda.Infraestrutura.SqlServer\eAgenda.Infraestrutura.SqlServer.csproj" />
+    <ProjectReference Include="..\eAgenda.Infraestrutura\eAgenda.Infraestrutura.csproj" />
+  </ItemGroup>
+
+</Project>
