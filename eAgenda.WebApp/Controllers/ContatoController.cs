@@ -1,4 +1,6 @@
-﻿using eAgenda.Dominio.ModuloContato;
+﻿using System.Data.Common;
+using eAgenda.Dominio.ModuloContato;
+using eAgenda.Infraestrutura.Orm.Compartilhado;
 using eAgenda.WebApp.Extensions;
 using eAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +11,11 @@ namespace eAgenda.WebApp.Controllers;
 public class ContatoController : Controller
 {
     private readonly IRepositorioContato repositorioContato;
-
-    public ContatoController(IRepositorioContato repositorioContato)
+    private readonly eAgendaDbContext contexto;
+    public ContatoController(IRepositorioContato repositorioContato, eAgendaDbContext contexto)
     {
         this.repositorioContato = repositorioContato;
+        this.contexto = contexto;
     }
 
     [HttpGet]
@@ -56,7 +59,23 @@ public class ContatoController : Controller
 
         var entidade = cadastrarVM.ParaEntidade();
 
-        repositorioContato.CadastrarRegistro(entidade);
+        var transacao = contexto.Database.BeginTransaction();
+
+        try
+        {
+            repositorioContato.CadastrarRegistro(entidade);
+
+            contexto.SaveChanges();
+            transacao.Commit();
+
+        }
+
+        catch (Exception)
+        {
+            transacao.Rollback();
+            throw;  
+        }
+        
 
         return RedirectToAction(nameof(Index));
     }
@@ -102,7 +121,20 @@ public class ContatoController : Controller
 
         var entidadeEditada = editarVM.ParaEntidade();
 
-        repositorioContato.EditarRegistro(id, entidadeEditada);
+        var transacao = contexto.Database.BeginTransaction();
+
+        try
+        {
+            repositorioContato.EditarRegistro(id, entidadeEditada);
+            contexto.SaveChanges();
+            transacao.Commit();
+        }
+
+        catch (Exception)
+        {
+            transacao.Rollback();
+            throw;
+        }
 
         return RedirectToAction(nameof(Index));
     }
@@ -124,7 +156,21 @@ public class ContatoController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult ExcluirConfirmado(Guid id)
     {
-        repositorioContato.ExcluirRegistro(id);
+
+        var transation = contexto.Database.BeginTransaction();
+        try
+        {
+            repositorioContato.ExcluirRegistro(id);
+            contexto.SaveChanges();
+
+            transation.Commit();
+        }
+        catch(Exception)
+        {
+            transation.Rollback();
+            throw;
+        }
+        
 
         return RedirectToAction(nameof(Index));
     }

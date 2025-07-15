@@ -12,7 +12,7 @@ using eAgenda.Infraestrutura.Orm.Compartilhado;
 namespace eAgenda.Infraestrutura.Orm.Migrations
 {
     [DbContext(typeof(eAgendaDbContext))]
-    [Migration("20250715170707_Add_TBContato")]
+    [Migration("20250715175221_Add_TBContato")]
     partial class Add_TBContato
     {
         /// <inheritdoc />
@@ -24,44 +24,6 @@ namespace eAgenda.Infraestrutura.Orm.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("eAgenda.Dominio.ModuloCompromisso.Compromisso", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Assunto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ContatoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<TimeSpan>("HoraInicio")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("HoraTermino")
-                        .HasColumnType("time");
-
-                    b.Property<string>("Link")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Local")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Tipo")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContatoId");
-
-                    b.ToTable("Compromisso");
-                });
 
             modelBuilder.Entity("eAgenda.Dominio.ModuloContato.Contato", b =>
                 {
@@ -89,20 +51,6 @@ namespace eAgenda.Infraestrutura.Orm.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Contatos");
-                });
-
-            modelBuilder.Entity("eAgenda.Dominio.ModuloCompromisso.Compromisso", b =>
-                {
-                    b.HasOne("eAgenda.Dominio.ModuloContato.Contato", "Contato")
-                        .WithMany("Compromissos")
-                        .HasForeignKey("ContatoId");
-
-                    b.Navigation("Contato");
-                });
-
-            modelBuilder.Entity("eAgenda.Dominio.ModuloContato.Contato", b =>
-                {
-                    b.Navigation("Compromissos");
                 });
 #pragma warning restore 612, 618
         }

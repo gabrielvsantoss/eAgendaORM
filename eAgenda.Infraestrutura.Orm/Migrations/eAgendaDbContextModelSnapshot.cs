@@ -22,7 +22,6 @@ namespace eAgenda.Infraestrutura.Orm.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-
             modelBuilder.Entity("eAgenda.Dominio.ModuloContato.Contato", b =>
                 {
                     b.Property<Guid>("Id")
@@ -49,11 +48,6 @@ namespace eAgenda.Infraestrutura.Orm.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Contatos");
-                });
-
-            modelBuilder.Entity("eAgenda.Dominio.ModuloContato.Contato", b =>
-                {
-                    b.Navigation("Compromissos");
                 });
 #pragma warning restore 612, 618
         }

@@ -26,9 +26,9 @@ namespace eAgenda.Infraestrutura.Orm.Migrations
                 {
                     table.PrimaryKey("PK_Contatos", x => x.Id);
                 });
-
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
