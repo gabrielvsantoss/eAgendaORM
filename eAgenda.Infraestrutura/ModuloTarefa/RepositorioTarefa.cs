@@ -87,4 +87,9 @@ public class RepositorioTarefa : IRepositorioTarefa
     {
         return registros.FindAll(t => t.Concluida);
     }
+
+    public void AdicionarItem(Guid id, ItemTarefa item)
+    {
+        throw new NotImplementedException();
+    }
 }

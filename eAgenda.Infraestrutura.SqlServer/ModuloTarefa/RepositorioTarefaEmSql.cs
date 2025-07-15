@@ -345,4 +345,9 @@ public class RepositorioTarefaEmSql : RepositorioBaseEmSql<Tarefa>, IRepositorio
 
         conexaoComBanco.Close();
     }
+
+    public void AdicionarItem(Guid id, ItemTarefa item)
+    {
+        throw new NotImplementedException();
+    }
 }

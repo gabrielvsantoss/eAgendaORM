@@ -8,6 +8,7 @@ using eAgenda.Infraestrutura.Orm.ModuloCategoria;
 using eAgenda.Infraestrutura.Orm.ModuloCompromisso;
 using eAgenda.Infraestrutura.Orm.ModuloContato;
 using eAgenda.Infraestrutura.Orm.ModuloDespesa;
+using eAgenda.Infraestrutura.Orm.ModuloTarefa;
 using eAgenda.Infraestrutura.SqlServer.ModuloCategoria;
 using eAgenda.Infraestrutura.SqlServer.ModuloCompromisso;
 using eAgenda.Infraestrutura.SqlServer.ModuloContato;
@@ -44,7 +45,7 @@ public class Program
         builder.Services.AddScoped<IRepositorioCompromisso, RepositorioCompromissoEmOrm>();
         builder.Services.AddScoped<IRepositorioCategoria, RepositorioCategoriaEmOrm>();
         builder.Services.AddScoped<IRepositorioDespesa, RepositorioDespesaEmOrm>();
-        builder.Services.AddScoped<IRepositorioTarefa, RepositorioTarefaEmSql>();
+        builder.Services.AddScoped<IRepositorioTarefa, RepositorioTarefaEmOrm>();
 
         builder.Services.AddEntityFrameworkConfig(builder.Configuration);
 

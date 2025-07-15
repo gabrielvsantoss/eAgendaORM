@@ -12,8 +12,8 @@ using eAgenda.Infraestrutura.Orm.Compartilhado;
 namespace eAgenda.Infraestrutura.Orm.Migrations
 {
     [DbContext(typeof(eAgendaDbContext))]
-    [Migration("20250715225142_Add_TBDespesa")]
-    partial class Add_TBDespesa
+    [Migration("20250715231129_Add_TBItem")]
+    partial class Add_TBItem
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,6 +142,55 @@ namespace eAgenda.Infraestrutura.Orm.Migrations
                     b.ToTable("Despesas");
                 });
 
+            modelBuilder.Entity("eAgenda.Dominio.ModuloTarefa.ItemTarefa", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Concluido")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("TarefaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TarefaId");
+
+                    b.ToTable("Itens");
+                });
+
+            modelBuilder.Entity("eAgenda.Dominio.ModuloTarefa.Tarefa", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Concluida")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DataConclusao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Prioridade")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tarefa");
+                });
+
             modelBuilder.Entity("CategoriaDespesa", b =>
                 {
                     b.HasOne("eAgenda.Dominio.ModuloCategoria.Categoria", null)
@@ -166,9 +215,25 @@ namespace eAgenda.Infraestrutura.Orm.Migrations
                     b.Navigation("Contato");
                 });
 
+            modelBuilder.Entity("eAgenda.Dominio.ModuloTarefa.ItemTarefa", b =>
+                {
+                    b.HasOne("eAgenda.Dominio.ModuloTarefa.Tarefa", "Tarefa")
+                        .WithMany("Itens")
+                        .HasForeignKey("TarefaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tarefa");
+                });
+
             modelBuilder.Entity("eAgenda.Dominio.ModuloContato.Contato", b =>
                 {
                     b.Navigation("Compromissos");
+                });
+
+            modelBuilder.Entity("eAgenda.Dominio.ModuloTarefa.Tarefa", b =>
+                {
+                    b.Navigation("Itens");
                 });
 #pragma warning restore 612, 618
         }
